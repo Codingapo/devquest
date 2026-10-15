@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="DevQuest is an open-source coding challenge platform for learning through practice and collaboration.">
+  <title>DevQuest — Learn by Building</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#">DevQuest</a>
+    <nav aria-label="Primary navigation">
+      <a href="#challenges">Challenges</a>
+      <a href="#contribute">Contribute</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">OPEN SOURCE · LEARN · BUILD · COLLABORATE</p>
+      <h1>Level up your coding skills, one quest at a time.</h1>
+      <p>Practice real programming problems, track what you can solve, and contribute new challenges through GitHub.</p>
+      <a class="button" href="#challenges">Start a quest</a>
+    </section>
+
+    <section class="stats" aria-label="Project highlights">
+      <div><strong id="challenge-count">0</strong><span>Challenges</span></div>
+      <div><strong>3</strong><span>Difficulty levels</span></div>
+      <div><strong>100%</strong><span>Open source</span></div>
+    </section>
+
+    <section id="challenges" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CHALLENGE BOARD</p>
+          <h2>Choose your next quest</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Filter challenges">
+          <button class="filter active" data-filter="All">All</button>
+          <button class="filter" data-filter="Beginner">Beginner</button>
+          <button class="filter" data-filter="Intermediate">Intermediate</button>
+          <button class="filter" data-filter="Advanced">Advanced</button>
+        </div>
+      </div>
+      <div id="challenge-grid" class="challenge-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="contribute" class="section contribute">
+      <p class="eyebrow">BUILD WITH US</p>
+      <h2>DevQuest gets better when developers contribute.</h2>
+      <p>Found a bug? Have a challenge idea? Open an issue, create a branch, and submit a pull request.</p>
+      <a class="button secondary" href="https://github.com/Codingapo/devquest">View on GitHub</a>
+    </section>
+  </main>
+
+  <footer>Built in the open with GitHub · DevQuest</footer>
+  <script src="js/app.js"></script>
+</body>
+</html>
