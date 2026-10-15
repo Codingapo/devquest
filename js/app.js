@@ -40,7 +40,12 @@ function getVisibleChallenges() {
 
   const filtered = challenges.filter(challenge => {
     const matchesDifficulty =
-      activeDifficulty === "All" || challenge.difficulty === activeDifficulty;
+      activeDifficulty === "All" ||
+      activeDifficulty === "Favorites" ||
+      challenge.difficulty === activeDifficulty;
+
+    const matchesFavorites =
+      activeDifficulty !== "Favorites" || favorites.has(challenge.id);
 
     const haystack = [
       challenge.title,
@@ -51,7 +56,7 @@ function getVisibleChallenges() {
     ].join(" ").toLowerCase();
 
     const matchesSearch = !normalized || haystack.includes(normalized);
-    return matchesDifficulty && matchesSearch;
+    return matchesDifficulty && matchesFavorites && matchesSearch;
   });
 
   return [...filtered].sort((a, b) => {
@@ -70,7 +75,7 @@ function render() {
     grid.innerHTML = `
       <div class="empty-state">
         <strong>No quests found.</strong>
-        <p>Try a different search term or difficulty level.</p>
+        <p>${activeDifficulty === "Favorites" ? "Favorite a quest first, or choose another filter." : "Try a different search term or difficulty level."}</p>
       </div>
     `;
   } else {
