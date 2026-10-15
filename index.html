@@ -27,7 +27,7 @@
     <section class="stats" aria-label="Project highlights">
       <div><strong id="challenge-count">0</strong><span>Challenges</span></div>
       <div><strong id="completed-count">0</strong><span>Completed quests</span></div>
-      <div><strong>3</strong><span>Difficulty levels</span></div>
+      <div><strong id="favorites-count">0</strong><span>Favorite quests</span></div>
     </section>
 
     <section class="progress-dashboard" aria-labelledby="progress-title">
@@ -54,6 +54,16 @@
           <span class="sr-only">Search challenges</span>
           <input id="challenge-search" type="search" placeholder="Search challenges, categories, or languages..." autocomplete="off">
         </label>
+        <div class="sort-wrap">
+          <label for="challenge-sort" class="sr-only">Sort challenges</label>
+          <select id="challenge-sort" aria-label="Sort challenges">
+            <option value="default">Sort: Default</option>
+            <option value="title-asc">Title A–Z</option>
+            <option value="title-desc">Title Z–A</option>
+            <option value="difficulty-asc">Difficulty: Easy → Hard</option>
+            <option value="difficulty-desc">Difficulty: Hard → Easy</option>
+          </select>
+        </div>
         <div class="filters" role="group" aria-label="Filter challenges by difficulty">
           <button class="filter active" data-filter="All">All</button>
           <button class="filter" data-filter="Beginner">Beginner</button>
