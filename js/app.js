@@ -1,11 +1,4 @@
-const challenges = [
-  { id: "reverse-string", title: "Reverse a String", difficulty: "Beginner", language: "Any", category: "Strings", description: "Return a string with its characters in reverse order." },
-  { id: "fizzbuzz-plus", title: "FizzBuzz+", difficulty: "Beginner", language: "Any", category: "Logic", description: "Build a configurable version of the classic FizzBuzz problem." },
-  { id: "palindrome-checker", title: "Palindrome Checker", difficulty: "Beginner", language: "Any", category: "Strings", description: "Detect palindromes while ignoring spaces and letter case." },
-  { id: "expense-summary", title: "Expense Summary", difficulty: "Intermediate", language: "JavaScript", category: "Data", description: "Summarise transactions by category and calculate totals." },
-  { id: "rate-limiter", title: "Rate Limiter", difficulty: "Intermediate", language: "Any", category: "Backend", description: "Design a simple fixed-window request rate limiter." },
-  { id: "path-finder", title: "Path Finder", difficulty: "Advanced", language: "Any", category: "Algorithms", description: "Find the shortest path through a weighted graph." }
-];
+const challenges = window.DEVQUEST_CHALLENGES;
 
 const STORAGE_KEY = "devquest-completed";
 const grid = document.querySelector("#challenge-grid");
@@ -62,7 +55,7 @@ function render() {
             <span class="badge">${challenge.difficulty}</span>
             <span class="category">${challenge.category}</span>
           </div>
-          <h3>${challenge.title}</h3>
+          <h3><a class="challenge-link" href="challenge.html?id=${challenge.id}">${challenge.title}</a></h3>
           <p>${challenge.description}</p>
           <div class="quest-actions">
             <footer>Language: ${challenge.language}</footer>
