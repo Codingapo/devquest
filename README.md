@@ -25,6 +25,14 @@ You can:
 
 The project is intentionally dependency-light: plain HTML, CSS, and JavaScript.
 
+## Live demo
+
+Once GitHub Pages is enabled for this repository, DevQuest will be available at:
+
+**https://codingapo.github.io/devquest/**
+
+Try the live app, then come back to the repository if you want to contribute or star the project.
+
 ## Quick start
 
 ```bash
