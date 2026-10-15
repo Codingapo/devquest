@@ -8,6 +8,11 @@ const buttons = document.querySelectorAll(".filter");
 const search = document.querySelector("#challenge-search");
 const summary = document.querySelector("#results-summary");
 const randomQuestButton = document.querySelector("#random-quest");
+const progressPercent = document.querySelector("#progress-percent");
+const progressCompleted = document.querySelector("#progress-completed");
+const progressRemaining = document.querySelector("#progress-remaining");
+const progressFill = document.querySelector("#progress-fill");
+const progressTrack = document.querySelector(".progress-track");
 
 let activeDifficulty = "All";
 let searchTerm = "";
@@ -69,9 +74,18 @@ function render() {
     }).join("");
   }
 
+  const completedTotal = completed.size;
+  const remaining = Math.max(challenges.length - completedTotal, 0);
+  const percentage = challenges.length ? Math.round((completedTotal / challenges.length) * 100) : 0;
+
   count.textContent = challenges.length;
-  completedCount.textContent = completed.size;
-  summary.textContent = `${visible.length} of ${challenges.length} challenges shown · ${completed.size} completed`;
+  completedCount.textContent = completedTotal;
+  progressPercent.textContent = `${percentage}%`;
+  progressCompleted.textContent = completedTotal;
+  progressRemaining.textContent = remaining;
+  progressFill.style.width = `${percentage}%`;
+  progressTrack.setAttribute("aria-valuenow", String(percentage));
+  summary.textContent = `${visible.length} of ${challenges.length} challenges shown · ${completedTotal} completed`;
 }
 
 grid.addEventListener("click", event => {
