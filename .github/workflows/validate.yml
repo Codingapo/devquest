@@ -1,0 +1,54 @@
+name: Validate DevQuest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required files
+        shell: bash
+        run: |
+          required_files=(
+            "index.html"
+            "challenge.html"
+            "css/style.css"
+            "js/app.js"
+            "js/challenge.js"
+            "js/challenges-data.js"
+            "README.md"
+            "CONTRIBUTING.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required file: $file"
+              exit 1
+            fi
+            echo "Found $file"
+          done
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          node --check js/app.js
+          node --check js/challenge.js
+          node --check js/challenges-data.js
+
+      - name: Confirm HTML entry points
+        shell: bash
+        run: |
+          grep -q "<!doctype html>" index.html
+          grep -q "<!doctype html>" challenge.html
+          echo "Basic project validation passed."
