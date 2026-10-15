@@ -7,6 +7,7 @@ const completedCount = document.querySelector("#completed-count");
 const buttons = document.querySelectorAll(".filter");
 const search = document.querySelector("#challenge-search");
 const summary = document.querySelector("#results-summary");
+const randomQuestButton = document.querySelector("#random-quest");
 
 let activeDifficulty = "All";
 let searchTerm = "";
@@ -97,6 +98,13 @@ buttons.forEach(button => {
 search.addEventListener("input", event => {
   searchTerm = event.target.value;
   render();
+});
+
+randomQuestButton.addEventListener("click", () => {
+  const visible = getVisibleChallenges();
+  const pool = visible.length ? visible : challenges;
+  const selected = pool[Math.floor(Math.random() * pool.length)];
+  window.location.href = `challenge.html?id=${selected.id}`;
 });
 
 render();
