@@ -1,20 +1,27 @@
 const challenges = [
-  { title: "Reverse a String", difficulty: "Beginner", language: "Any", category: "Strings", description: "Return a string with its characters in reverse order." },
-  { title: "FizzBuzz+", difficulty: "Beginner", language: "Any", category: "Logic", description: "Build a configurable version of the classic FizzBuzz problem." },
-  { title: "Palindrome Checker", difficulty: "Beginner", language: "Any", category: "Strings", description: "Detect palindromes while ignoring spaces and letter case." },
-  { title: "Expense Summary", difficulty: "Intermediate", language: "JavaScript", category: "Data", description: "Summarise transactions by category and calculate totals." },
-  { title: "Rate Limiter", difficulty: "Intermediate", language: "Any", category: "Backend", description: "Design a simple fixed-window request rate limiter." },
-  { title: "Path Finder", difficulty: "Advanced", language: "Any", category: "Algorithms", description: "Find the shortest path through a weighted graph." }
+  { id: "reverse-string", title: "Reverse a String", difficulty: "Beginner", language: "Any", category: "Strings", description: "Return a string with its characters in reverse order." },
+  { id: "fizzbuzz-plus", title: "FizzBuzz+", difficulty: "Beginner", language: "Any", category: "Logic", description: "Build a configurable version of the classic FizzBuzz problem." },
+  { id: "palindrome-checker", title: "Palindrome Checker", difficulty: "Beginner", language: "Any", category: "Strings", description: "Detect palindromes while ignoring spaces and letter case." },
+  { id: "expense-summary", title: "Expense Summary", difficulty: "Intermediate", language: "JavaScript", category: "Data", description: "Summarise transactions by category and calculate totals." },
+  { id: "rate-limiter", title: "Rate Limiter", difficulty: "Intermediate", language: "Any", category: "Backend", description: "Design a simple fixed-window request rate limiter." },
+  { id: "path-finder", title: "Path Finder", difficulty: "Advanced", language: "Any", category: "Algorithms", description: "Find the shortest path through a weighted graph." }
 ];
 
+const STORAGE_KEY = "devquest-completed";
 const grid = document.querySelector("#challenge-grid");
 const count = document.querySelector("#challenge-count");
+const completedCount = document.querySelector("#completed-count");
 const buttons = document.querySelectorAll(".filter");
 const search = document.querySelector("#challenge-search");
 const summary = document.querySelector("#results-summary");
 
 let activeDifficulty = "All";
 let searchTerm = "";
+let completed = new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+
+function saveProgress() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...completed]));
+}
 
 function getVisibleChallenges() {
   const normalized = searchTerm.trim().toLowerCase();
@@ -32,7 +39,6 @@ function getVisibleChallenges() {
     ].join(" ").toLowerCase();
 
     const matchesSearch = !normalized || haystack.includes(normalized);
-
     return matchesDifficulty && matchesSearch;
   });
 }
@@ -48,22 +54,43 @@ function render() {
       </div>
     `;
   } else {
-    grid.innerHTML = visible.map(challenge => `
-      <article class="card">
-        <div class="card-top">
-          <span class="badge">${challenge.difficulty}</span>
-          <span class="category">${challenge.category}</span>
-        </div>
-        <h3>${challenge.title}</h3>
-        <p>${challenge.description}</p>
-        <footer>Language: ${challenge.language}</footer>
-      </article>
-    `).join("");
+    grid.innerHTML = visible.map(challenge => {
+      const isDone = completed.has(challenge.id);
+      return `
+        <article class="card ${isDone ? "completed" : ""}">
+          <div class="card-top">
+            <span class="badge">${challenge.difficulty}</span>
+            <span class="category">${challenge.category}</span>
+          </div>
+          <h3>${challenge.title}</h3>
+          <p>${challenge.description}</p>
+          <div class="quest-actions">
+            <footer>Language: ${challenge.language}</footer>
+            <button class="complete-btn ${isDone ? "done" : ""}" data-id="${challenge.id}" aria-pressed="${isDone}">
+              ${isDone ? "Completed ✓" : "Mark complete"}
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
   }
 
   count.textContent = challenges.length;
-  summary.textContent = `${visible.length} of ${challenges.length} challenges shown`;
+  completedCount.textContent = completed.size;
+  summary.textContent = `${visible.length} of ${challenges.length} challenges shown · ${completed.size} completed`;
 }
+
+grid.addEventListener("click", event => {
+  const button = event.target.closest(".complete-btn");
+  if (!button) return;
+
+  const id = button.dataset.id;
+  if (completed.has(id)) completed.delete(id);
+  else completed.add(id);
+
+  saveProgress();
+  render();
+});
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
