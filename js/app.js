@@ -16,6 +16,7 @@ const progressCompleted = document.querySelector("#progress-completed");
 const progressRemaining = document.querySelector("#progress-remaining");
 const progressFill = document.querySelector("#progress-fill");
 const progressTrack = document.querySelector(".progress-track");
+const resetProgressButton = document.querySelector("#reset-progress");
 
 let activeDifficulty = "All";
 let searchTerm = "";
@@ -166,6 +167,19 @@ randomQuestButton.addEventListener("click", () => {
   const pool = visible.length ? visible : challenges;
   const selected = pool[Math.floor(Math.random() * pool.length)];
   window.location.href = `challenge.html?id=${selected.id}`;
+});
+
+resetProgressButton.addEventListener("click", () => {
+  const confirmed = window.confirm("Reset all completed quests and favorites?");
+  if (!confirmed) return;
+
+  completed.clear();
+  favorites.clear();
+  saveProgress();
+  saveFavorites();
+  activeDifficulty = "All";
+  buttons.forEach(item => item.classList.toggle("active", item.dataset.filter === "All"));
+  render();
 });
 
 render();
