@@ -1,0 +1,34 @@
+name: Feature request
+description: Suggest a useful improvement for DevQuest.
+title: "[Feature]: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: "Tell us what problem the feature should solve and what a good outcome looks like."
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem or limitation are you trying to solve?
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior you would like.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Optional alternatives or workarounds you considered.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues for a similar request.
+          required: true
